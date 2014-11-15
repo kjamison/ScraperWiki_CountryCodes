@@ -26,6 +26,9 @@ for count, tr in enumerate(doc.cssselect('tr')):
                 if detailink.find(':',0,len(detailink)) != -1:
                     detailink = detailink[6:]
                     print detailink
+        else:
+            print row[0]
+            
         now = datetime.datetime.now()
         data ={"tmsp_scraped":str(now), "eng_short_name":row[0], "alpha_2_code":row[1], "alpha_3_code":row[2], "numeric_code":row[3], "iso_31662_code":detailink}
         scraperwiki.sqlite.save(unique_keys=["eng_short_name"], data=data, table_name="s_iso31661")
@@ -53,6 +56,7 @@ doc2 = lxml.html.fromstring(html)
 for count, tr in enumerate(doc2.cssselect('tr')):
     row = [(td.text_content()) for td in tr.cssselect('td')]
     if len(row)==6:
+        print row[3]
         now = datetime.datetime.now()
         data ={"tmsp_scraped":str(now), "eng_short_name":row[1], "alpha_2_code":row[0], "cctld_code":row[3], "iso_31662_code":row[4]}
         scraperwiki.sqlite.save(unique_keys=["eng_short_name"], data=data, table_name="s_iso31661_cctld")
