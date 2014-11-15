@@ -56,4 +56,4 @@ for count, tr in enumerate(doc2.cssselect('tr')):
         print row[3]
         now = datetime.datetime.now()
         data ={"tmsp_scraped":str(now), "eng_short_name":row[1], "alpha_2_code":row[0], "cctld_code":row[3], "iso_31662_code":row[4]}
-        scraperwiki.sqlite.save(unique_keys=["eng_short_name"], data=data, table_name="s_iso31661_cctld")
+        scraperwiki.sqlite.save(unique_keys=["eng_short_name"], data=data, table_name="s_iso31661")
