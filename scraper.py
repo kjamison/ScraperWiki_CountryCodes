@@ -12,7 +12,6 @@ def get_html(title):
     return html
 
 page_title = "ISO_3166-1"
-
 html = get_html(page_title)
 doc = lxml.html.fromstring(html)
 
@@ -41,4 +40,13 @@ for count, tr in enumerate(doc.cssselect('tr')):
                     scraperwiki.sqlite.save(unique_keys=["iso_31662_code","region_code"], data=data, table_name="s_iso31662_region")
 
 
-        
+page_title = "ISO_3166-1_alpha-2"
+html = get_html(page_title)
+doc2 = lxml.html.fromstring(html)
+
+for count, tr in enumerate(doc2.cssselect('tr')):
+    row = [(td.text_content()) for td in tr.cssselect('td')]
+    if len(row)==6:
+        now = datetime.datetime.now()
+        data ={"tmsp_scraped":str(now), "eng_short_name":row[1], "alpha_2_code":row[0], "cctld_code":row[3], "iso_31662_code":row[4]}
+        scraperwiki.sqlite.save(unique_keys=["eng_short_name"], data=data, table_name="s_iso31661_cctld")
