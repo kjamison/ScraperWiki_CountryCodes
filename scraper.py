@@ -20,14 +20,11 @@ doc = lxml.html.fromstring(html)
 for count, tr in enumerate(doc.cssselect('tr')):
     row = [(td.text_content()) for td in tr.cssselect('td')]
     if len(row)==5:
-        if run_regional:
-            for ahref in tr.cssselect('a'):
-                detailink = ahref.attrib['href']
-                if detailink.find(':',0,len(detailink)) != -1:
-                    detailink = detailink[6:]
-                    print detailink
-        else:
-            print row[0]
+        for ahref in tr.cssselect('a'):
+            detailink = ahref.attrib['href']
+            if detailink.find(':',0,len(detailink)) != -1:
+                detailink = detailink[6:]
+                print detailink
             
         now = datetime.datetime.now()
         data ={"tmsp_scraped":str(now), "eng_short_name":row[0], "alpha_2_code":row[1], "alpha_3_code":row[2], "numeric_code":row[3], "iso_31662_code":detailink}
